@@ -1,0 +1,156 @@
+class Fornecedor {
+    private _id: number;
+    private _nomeRazaoSocial: string;
+    private _cpfCnpj: string;
+    private _telefone: string;
+    private _endereco: string;
+  
+    constructor(id: number, nomeRazaoSocial: string, cpfCnpj: string, telefone: string, endereco: string) {
+      this._id = id;
+      this._nomeRazaoSocial = nomeRazaoSocial;
+      this._cpfCnpj = cpfCnpj;
+      this._telefone = telefone;
+      this._endereco = endereco;
+    }
+  
+    get id() {
+      return this._id;
+    }
+  
+    set id(value: number) {
+      this._id = value;
+    }
+  
+    get nomeRazaoSocial() {
+      return this._nomeRazaoSocial;
+    }
+  
+    set nomeRazaoSocial(value: string) {
+      this._nomeRazaoSocial = value;
+    }
+  
+    get cpfCnpj() {
+      return this._cpfCnpj;
+    }
+  
+    set cpfCnpj(value: string) {
+      this._cpfCnpj = value;
+    }
+  
+    get telefone() {
+      return this._telefone;
+    }
+  
+    set telefone(value: string) {
+      this._telefone = value;
+    }
+  
+    get endereco() {
+      return this._endereco;
+    }
+  
+    set endereco(value: string) {
+      this._endereco = value;
+    }
+  }
+
+class Produto {
+    private _id: number;
+    private _descricao: string;
+    protected _fornecedor: Fornecedor;
+    private _valorUnitario: number;
+  
+    constructor(id: number, descricao: string, fornecedor: Fornecedor, valorUnitario: number) {
+      this._id = id;
+      this._descricao = descricao;
+      this._fornecedor = fornecedor;
+      this._valorUnitario = valorUnitario;
+    }
+  
+    public get id(): number {
+      return this._id;
+    }
+  
+    public set id(id: number) {
+      this._id = id;
+    }
+  
+    public get descricao(): string {
+      return this._descricao;
+    }
+  
+    public set descricao(descricao: string) {
+      this._descricao = descricao;
+    }
+  
+    public get fornecedor(): Fornecedor {
+      return this._fornecedor;
+    }
+  
+    public set fornecedor(fornecedor: Fornecedor) {
+      this._fornecedor = fornecedor;
+    }
+  
+    public get valorUnitario(): number {
+      return this._valorUnitario;
+    }
+  
+    public set valorUnitario(valorUnitario: number) {
+      if (valorUnitario <= 0) {
+        throw new Error('O valor unitário deve ser maior que zero.');
+      }
+      this._valorUnitario = valorUnitario;
+    }
+  }
+
+  class Estoque {
+    private _id: number;
+    private _produto: Produto;
+    private _quantidade: number;
+  
+    constructor(id: number, produto: Produto, quantidade: number) {
+      this._id = id;
+      this._produto = produto;
+      this._quantidade = quantidade;
+    }
+
+  
+    get id(): number {
+      return this._id;
+    }
+  
+    set id(id: number) {
+      this._id = id;
+    }
+  
+    get produto(): Produto {
+      return this._produto;
+    }
+  
+    set produto(produto: Produto) {
+      this._produto = produto;
+    }
+  
+    get quantidade(): number {
+      return this._quantidade;
+    }
+  
+    set quantidade(quantidade: number) {
+      if (quantidade < 0) {
+        throw new Error('Quantidade não pode ser menor do que zero.');
+      }
+      this._quantidade = quantidade;
+    }
+
+  
+    ValorDoProdutoEmEstoque(): number {
+      return this._produto.valorUnitario * this._quantidade;
+    }
+  }
+  
+  const fornecedor1 = new Fornecedor(1, 'Fornecedor 1', '123.456.789-00', '1234-5678', 'Rua 1');
+  const produto1 = new Produto(1, 'Produto 1', fornecedor1, 10);
+  const estoque1 = new Estoque(1, produto1, 5);
+  console.log(fornecedor1);
+  console.log(produto1);
+  console.log(estoque1.ValorDoProdutoEmEstoque());
